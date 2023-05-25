@@ -55,14 +55,19 @@ classDiagram
       +string title
       +string description
       +string type
+      +string user_id
     }
     class Rating{
       +string id
       -int stars
+      +string recipe_id
+      +string user_id
     }
     class Comments{
       +string id
       +string comment
+      +string recipe_id
+      +string user_id
     }
     class Ingredient{
         +string name
