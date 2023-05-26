@@ -12,9 +12,9 @@ The proposed solution is to develop an application that allows users to easily f
 
 #### Must have
 
-- Users must be able to create recipes that includes detailed nutrient information, including protein, carbohydrates, fats, calories, vitamins, and minerals.
+- Users must be able to create recipes that includes detailed nutrient information, including protein, carbohydrates, fats and calories.
 - Users must be able to filter recipes based on their preferences and easily find suitable options.
-- Users must be able to view the nutritional breakdown of the entire recipe and individual ingredients, enabling them to make informed choices based on their dietary goals.
+- Users must be able to view the nutritional breakdown of the entire recipe and individual ingredients.
 
 #### Should have
 
@@ -24,6 +24,10 @@ The proposed solution is to develop an application that allows users to easily f
 
 - The application could allow users to customize their dietary preferences and set specific nutritional goals.
 - The application could allow users to create collections of their favorite recipes and save them for future reference.
+
+#### Will not have
+
+-
 
 #### Domain Model Diagram
 
@@ -43,40 +47,49 @@ classDiagram
     User --> Comments
     Recipe --> Rating
     Recipe --> Comments
-    Recipe --> Ingredient
     Recipe --> RecipeIngredient
     Ingredient --> RecipeIngredient
-    User : +string id
-    User : +string name
-    User : +string email
-    User : +password password
+    User : int id
+    User : string first_name
+    User : string last_name
+    User : string email
+    User : password password
+    class Type{
+      int id
+      string title
+    }
     class Recipe{
-      +string id
-      +string title
-      +string description
-      +string type
-      +string user_id
+      int id
+      string title
+      string description
+      datetime created_at
+      int type_id
+      string user_id
     }
     class Rating{
-      +string id
-      -int stars
-      +string recipe_id
-      +string user_id
+      int id
+      int stars
+      datetime created_at
+      string recipe_id
+      string user_id
     }
-    class Comments{
-      +string id
-      +string comment
-      +string recipe_id
-      +string user_id
+    class Comment{
+      int id
+      string comment
+      datetime created_at
+      string recipe_id
+      string user_id
     }
     class Ingredient{
-        +string name
-        +float protein
-        +float carbohydrates
-        +float fats
-        +float calories
+        int id
+        string name
+        float protein
+        float carbohydrates
+        float fats
+        float calories
     }
     class RecipeIngredient{
+        int id
         string recipe_id
         string ingredient_id
     }
