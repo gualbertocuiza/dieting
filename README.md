@@ -223,6 +223,7 @@ GET _/recipes/1_
 {
   "id": 1,
   "title": "Honey garlic chicken",
+  "description": "<h5>Step 1</h5><p>Prepare 2 bowls, one with beaten egg, and second with cornstarch mixed with a pinch of salt and pepper.</p><h5>Step 2</h5><p>Dip the chicken into the beaten egg. Place all the pieces into the cornstarch and toss to lightly and evenly coat.</p>"
   "created_at": "2023-26-05 10:27:21.532056",
   "photo": "https://dieting.com/storage/35435634.png",
   "rating_avg": 4.5,
