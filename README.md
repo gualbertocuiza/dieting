@@ -44,9 +44,9 @@ flowchart TD
 classDiagram
     User --> Recipe
     User --> Rating
-    User --> Comments
+    User --> Comment
     Recipe --> Rating
-    Recipe --> Comments
+    Recipe --> Comment
     Recipe --> RecipeIngredient
     Ingredient --> RecipeIngredient
     User : int id
