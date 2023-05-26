@@ -48,6 +48,7 @@ classDiagram
     Recipe --> Rating
     Recipe --> Comment
     Recipe --> RecipeIngredient
+    Recipe --> Type
     Ingredient --> RecipeIngredient
     User : int id
     User : string first_name
