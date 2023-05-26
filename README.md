@@ -22,12 +22,13 @@ The proposed solution is to develop an application that allows users to easily f
 
 #### Could have
 
-- The application could allow users to customize their dietary preferences and set specific nutritional goals.
 - The application could allow users to create collections of their favorite recipes and save them for future reference.
+- The application could allow users to share recipes to other users.
 
 #### Will not have
 
--
+- Users will be able to set dieting goals.
+- The application will give recomendations.
 
 #### Domain Model Diagram
 
