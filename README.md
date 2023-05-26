@@ -227,32 +227,170 @@ GET _/recipes/1_
   "created_at": "2023-26-05 10:27:21.532056",
   "photo": "https://dieting.com/storage/35435634.png",
   "rating_avg": 4.5,
+  "comments": 12,
   "type": "Low-fat diet",
   "nutriends": {
     "protein": 25,
     "carbohydrates": 40,
     "fats": 15,
     "calories": 200
-  },
-  "comments": [
-    {
-      "id": 1,
-      "comment": "Delicious, hightly recommended",
-      "created_at": "2 hours ago",
-      "user": {
-        "name": "Jhon",
-        "avatar": "https://dieting.com/storage/35435634.png"
-      }
-    },
-    {
-      "id": 2,
-      "comment": "I really loved it",
-      "created_at": "6 hours ago",
-      "user": {
-        "name": "Julia",
-        "avatar": "https://dieting.com/storage/35435634.png"
-      }
-    }
-  ]
+  }
 }
 ```
+
+GET _/recipes?title=chicken&min-protein=20_
+
+> response: 200 OK
+
+```json
+[
+  {
+    "id": 1,
+    "title": "Honey garlic chicken",
+    "created_at": "2023-26-05 10:27:21.532056",
+    "photo": "https://dieting.com/storage/35435634.png",
+    "rating_avg": 4.5,
+    "comments": 5,
+    "type": "Low-fat diet",
+    "nutriends": {
+      "protein": 25,
+      "carbohydrates": 40,
+      "fats": 15,
+      "calories": 200
+    }
+  },
+  ...
+]
+```
+
+### Ingredients
+
+GET _/ingredients?name=chicken_
+
+> response: 200 OK
+
+```json
+[
+  {
+    "id": 1,
+    "name": "chicken",
+    "protein": 15,
+    "carbohydrates": 30,
+    "fats": 18,
+    "calories": 10
+  }
+]
+```
+
+POST _/ingredients_
+
+> response: 201 OK
+
+```json
+{
+  "id": 1,
+  "name": "chicken",
+  "protein": 15,
+  "carbohydrates": 30,
+  "fats": 18,
+  "calories": 10
+}
+```
+
+### Comments
+
+GET _/recipes/1/comments_
+
+> response: 200 OK
+
+```json
+[
+  {
+    "id": 1,
+    "comment": "Delicious, hightly recommended",
+    "created_at": "2 hours ago",
+    "user": {
+      "name": "Jhon",
+      "avatar": "https://dieting.com/storage/35435634.png"
+    }
+  },
+  {
+    "id": 2,
+    "comment": "I really loved it",
+    "created_at": "6 hours ago",
+    "user": {
+      "name": "Julia",
+      "avatar": "https://dieting.com/storage/35435634.png"
+    }
+  }
+]
+```
+
+POST _/recipes/1/comments_
+
+> response: 201 OK
+
+```json
+{
+  "id": 5,
+  "comment": "Looks good!",
+  "created_at": "just now",
+  "user": {
+    "name": "Jhon",
+    "avatar": "https://dieting.com/storage/35435634.png"
+  }
+},
+```
+
+DELETE _/recipes/1/comments/1_
+
+> response: 204 No content
+
+### Ratings
+
+GET _/recipes/1/ratings_
+
+> response: 200 OK
+
+```json
+[
+  {
+    "id": 1,
+    "rating": 3,
+    "created_at": "2 hours ago",
+    "user": {
+      "name": "Jhon",
+      "avatar": "https://dieting.com/storage/35435634.png"
+    }
+  },
+  {
+    "id": 2,
+    "rating": 4.5,
+    "created_at": "6 hours ago",
+    "user": {
+      "name": "Julia",
+      "avatar": "https://dieting.com/storage/35435634.png"
+    }
+  }
+]
+```
+
+POST _/recipes/1/ratings_
+
+> response: 201 OK
+
+```json
+{
+  "id": 5,
+  "rating": 5,
+  "created_at": "just now",
+  "user": {
+    "name": "Jhon",
+    "avatar": "https://dieting.com/storage/35435634.png"
+  }
+},
+```
+
+DELETE _/recipes/1/ratings/1_
+
+> response: 204 No content
