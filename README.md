@@ -54,6 +54,7 @@ classDiagram
     User : int id
     User : string first_name
     User : string last_name
+    User : string avatar
     User : string email
     User : password password
     class Type{
@@ -65,6 +66,7 @@ classDiagram
       string title
       string description
       datetime created_at
+      string photo
       int type_id
       string user_id
     }
@@ -99,7 +101,7 @@ classDiagram
 
 ### API Specification
 
-#### Users
+### Users
 
 GET _/users_
 
@@ -111,6 +113,7 @@ GET _/users_
     "id": 1,
     "first_name": "Jhon",
     "last_name": "Test",
+    "avatar": "https://dieting.com/storage/4353466.png"
     "created_at": "2023-26-05 10:27:21.532056",
     "email": "jhon.test@unosquare.com"
   },
@@ -118,6 +121,7 @@ GET _/users_
     "id": 2,
     "first_name": "Julia",
     "last_name": "Test",
+    "avatar": "https://dieting.com/storage/4353466.png"
     "created_at": "2023-26-05 10:27:21.532056",
     "email": "julia.test@unosquare.com"
   }
@@ -169,3 +173,85 @@ PUT _/users/1_
 DELETE _/users/1_
 
 > response: 204 No content
+
+### Recipes
+
+GET _/recipes_
+
+> response: 200 OK
+
+```json
+[
+  {
+    "id": 1,
+    "title": "Honey garlic chicken",
+    "created_at": "2023-26-05 10:27:21.532056",
+    "photo": "https://dieting.com/storage/35435634.png",
+    "rating_avg": 4.5,
+    "comments": 5,
+    "type": "Low-fat diet",
+    "nutriends": {
+      "protein": 25,
+      "carbohydrates": 40,
+      "fats": 15,
+      "calories": 200
+    }
+  },
+  {
+    "id": 2,
+    "title": "Crispy BBQ tofu sandwich",
+    "created_at": "2023-26-05 10:27:21.532056",
+    "photo": "https://dieting.com/storage/35435634.png",
+    "rating_avg": 4,
+    "comments": 10,
+    "type": "Vegan",
+    "nutriends": {
+      "protein": 20,
+      "carbohydrates": 40,
+      "fats": 15,
+      "calories": 200
+    }
+  }
+]
+```
+
+GET _/recipes/1_
+
+> response: 200 OK
+
+```json
+{
+  "id": 1,
+  "title": "Honey garlic chicken",
+  "created_at": "2023-26-05 10:27:21.532056",
+  "photo": "https://dieting.com/storage/35435634.png",
+  "rating_avg": 4.5,
+  "type": "Low-fat diet",
+  "nutriends": {
+    "protein": 25,
+    "carbohydrates": 40,
+    "fats": 15,
+    "calories": 200
+  },
+  "comments": [
+    {
+      "id": 1,
+      "comment": "Delicious, hightly recommended",
+      "created_at": "2 hours ago",
+      "user": {
+        "name": "Jhon",
+        "avatar": "https://dieting.com/storage/35435634.png"
+      }
+    },
+    {
+      "id": 2,
+      "comment": "I really loved it",
+      "created_at": "6 hours ago",
+      "user": {
+        "name": "Julia",
+        "avatar": "https://dieting.com/storage/35435634.png"
+      }
+    }
+  ]
+}
+```
