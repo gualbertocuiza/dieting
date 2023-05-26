@@ -101,8 +101,9 @@ classDiagram
 
 #### Users
 
-GET /users
-response: 200 OK
+GET _/users_
+
+> response: 200 OK
 
 ```json
 [
@@ -123,8 +124,9 @@ response: 200 OK
 ]
 ```
 
-GET /users/1
-response: 200 OK
+GET _/users/1_
+
+> response: 200 OK
 
 ```json
 {
@@ -136,8 +138,9 @@ response: 200 OK
 }
 ```
 
-POST /users
-response: 201 OK
+POST _/users_
+
+> response: 201 OK
 
 ```json
 {
@@ -149,8 +152,9 @@ response: 201 OK
 }
 ```
 
-PUT /users/1
-response: 201 OK
+PUT _/users/1_
+
+> response: 201 OK
 
 ```json
 {
@@ -162,5 +166,6 @@ response: 201 OK
 }
 ```
 
-DELETE /users/1
-response: 204 No content
+DELETE _/users/1_
+
+> response: 204 No content
