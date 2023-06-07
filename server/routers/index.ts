@@ -4,7 +4,7 @@ import recipeRouter from './recipes'
 
 const routers = express()
 
-routers.use('/api', authRouter)
-routers.use('/api', recipeRouter)
+routers.use('/auth', authRouter)
+routers.use('/recipes', recipeRouter)
 
 export default routers
