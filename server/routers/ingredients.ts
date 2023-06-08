@@ -1,4 +1,6 @@
 import { Router } from 'express'
+import { body } from 'express-validator'
+import validate from '../utils/validation'
 
 const router = Router()
 
@@ -101,9 +103,18 @@ router.route('/:id').get((req, res) => {
  *                         value: '{ "id": 1, "name": "chicken", "protein": 15, "carbohydrates": 30, "fats": 18, "calories": 10 }'
  *
  */
-router.route('/').post((req, res) => {
-  res.send(`create ingredient`)
-})
+router
+  .route('/')
+  .post(
+    body('name')
+      .isString()
+      .notEmpty()
+      .withMessage('The name field is required'),
+    validate,
+    (req, res) => {
+      res.send(`create ingredient`)
+    }
+  )
 
 /**
  * @openapi
@@ -139,9 +150,18 @@ router.route('/').post((req, res) => {
  *                         value: '{ "id": 1, "name": "chicken", "protein": 15, "carbohydrates": 30, "fats": 18, "calories": 10 }'
  *
  */
-router.route('/:id').put((req, res) => {
-  res.send(`update ingredient`)
-})
+router
+  .route('/:id')
+  .put(
+    body('name')
+      .isString()
+      .notEmpty()
+      .withMessage('The name field is required'),
+    validate,
+    (req, res) => {
+      res.send(`update ingredient`)
+    }
+  )
 
 /**
  * @openapi

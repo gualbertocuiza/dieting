@@ -1,4 +1,6 @@
 import { Router } from 'express'
+import { body } from 'express-validator'
+import validate from '../utils/validation'
 
 const router = Router()
 
@@ -101,9 +103,19 @@ router.route('/:id').get((req, res) => {
  *                         value: '{ "id": 1, "title": "Honey garlic chicken", "created_at": "2023-26-05 10:27:21.532056", "photo": "https://dieting.com/storage/35435634.png", "type": "Low-fat diet"}'
  *
  */
-router.route('/').post((req, res) => {
-  res.send(`create recipe`)
-})
+router
+  .route('/')
+  .post(
+    body('name')
+      .isString()
+      .isLength({ min: 3 })
+      .withMessage('the name must have minimum length of 3')
+      .trim(),
+    validate,
+    (req, res) => {
+      res.status(200).json({ body: req.body })
+    }
+  )
 
 /**
  * @openapi
@@ -138,9 +150,19 @@ router.route('/').post((req, res) => {
  *                         value: '{ "id": 1, "title": "Honey garlic chicken", "created_at": "2023-26-05 10:27:21.532056", "photo": "https://dieting.com/storage/35435634.png", "type": "Low-fat diet"}'
  *
  */
-router.route('/:id').put((req, res) => {
-  res.send(`update recipe`)
-})
+router
+  .route('/:id')
+  .put(
+    body('name')
+      .isString()
+      .isLength({ min: 3 })
+      .withMessage('the name must have minimum length of 3')
+      .trim(),
+    validate,
+    (req, res) => {
+      res.send(`update recipe`)
+    }
+  )
 
 /**
  * @openapi

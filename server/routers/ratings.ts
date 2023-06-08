@@ -1,4 +1,6 @@
 import { Router } from 'express'
+import { body } from 'express-validator'
+import validate from '../utils/validation'
 
 const router = Router()
 
@@ -89,9 +91,15 @@ router.route('/:id').get((req, res) => {
  *                         value: '{ "id": 1, "rating": 3, "created_at": "2 hours ago", "user": { "name": "Jhon", "avatar": "https://dieting.com/storage/35435634.png" }'
  *
  */
-router.route('/').post((req, res) => {
-  res.send(`create rating`)
-})
+router
+  .route('/')
+  .post(
+    body('rating').isNumeric().withMessage('The rating must be a number'),
+    validate,
+    (req, res) => {
+      res.json({ data: req.body })
+    }
+  )
 
 /**
  * @openapi
