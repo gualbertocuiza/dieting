@@ -1,5 +1,5 @@
 import express from 'express'
-import authRouter from './auth'
+import userRouter from './users'
 import recipeRouter from './recipes'
 import ingredientRouter from './ingredients'
 import commentRouter from './comments'
@@ -7,7 +7,7 @@ import ratingRouter from './ratings'
 
 const routers = express()
 
-routers.use('/auth', authRouter)
+routers.use('/users', userRouter)
 routers.use('/recipes', recipeRouter)
 routers.use('/ingredients', ingredientRouter)
 routers.use('/comments', commentRouter)
