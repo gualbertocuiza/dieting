@@ -5,7 +5,7 @@ CREATE TABLE
         last_name varchar(255),
         avatar varchar(255),
         email varchar(255) NOT NULL,
-        passsword varchar(255)
+        password varchar(255) NOT NULL
     );
 
 CREATE TABLE types( id serial PRIMARY KEY, title varchar(255) );
@@ -41,11 +41,10 @@ CREATE TABLE
 CREATE TABLE
     comments(
         id serial PRIMARY KEY,
-        comment
-            varchar(255),
-            created_at timestamp DEFAULT current_timestamp,
-            recipe_id integer REFERENCES recipes(id),
-            user_id integer REFERENCES users(id)
+        comment varchar(255),
+        created_at timestamp DEFAULT current_timestamp,
+        recipe_id integer REFERENCES recipes(id),
+        user_id integer REFERENCES users(id)
     );
 
 CREATE TABLE

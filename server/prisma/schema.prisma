@@ -83,11 +83,11 @@ model types {
 
 model users {
   id         Int        @id @default(autoincrement())
-  first_name String     @db.VarChar
-  last_name  String?    @db.VarChar
-  avatar     String?    @db.VarChar
-  email      String?    @db.VarChar
-  passsword  String?    @db.VarChar
+  first_name String     @db.VarChar(255)
+  last_name  String?    @db.VarChar(255)
+  avatar     String?    @db.VarChar(255)
+  email      String     @db.VarChar(255)
+  password   String     @db.VarChar(255)
   comments   comments[]
   ratings    ratings[]
   recipes    recipes[]
