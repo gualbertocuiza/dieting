@@ -16,8 +16,16 @@ export const authenticate = async (req: Request, res: Response) => {
     const passwordCorrect = await bcrypt.compare(password, user.password)
     if (passwordCorrect) {
       return res.status(200).json({
-        accessToken: generateToken(user.id),
-        refreshToken: generateRefreshToken(user.id),
+        accessToken: generateToken(
+          user.id,
+          process.env.ACCESS_JWT_SECRET,
+          parseInt(process.env.ACCESS_TOKEN_EXPIRATION)
+        ),
+        refreshToken: generateToken(
+          user.id,
+          process.env.REFRESH_JWT_SECRET,
+          parseInt(process.env.REFRESH_TOKEN_EXPIRATION)
+        ),
       })
     }
   }
@@ -25,7 +33,7 @@ export const authenticate = async (req: Request, res: Response) => {
 }
 
 export const refresh = async (req: Request, res: Response) => {
-  const userId = res.locals.user as number
+  const userId = res.locals.userId as number
   var user = await prisma.users.findUnique({
     where: {
       id: userId,
@@ -33,21 +41,23 @@ export const refresh = async (req: Request, res: Response) => {
   })
   if (user) {
     return res.status(200).json({
-      accessToken: generateToken(user.id),
-      refreshToken: generateRefreshToken(user.id),
+      accessToken: generateToken(
+        user.id,
+        process.env.ACCESS_JWT_SECRET,
+        parseInt(process.env.ACCESS_TOKEN_EXPIRATION)
+      ),
+      refreshToken: generateToken(
+        user.id,
+        process.env.REFRESH_JWT_SECRET,
+        parseInt(process.env.REFRESH_TOKEN_EXPIRATION)
+      ),
     })
   }
   return res.sendStatus(401)
 }
 
-const generateToken = (id: number) => {
-  return jwt.sign({ sub: id }, process.env.ACCESS_JWT_SECRET, {
-    expiresIn: process.env.ACCESS_TOKEN_EXPIRATION,
-  })
-}
-
-const generateRefreshToken = (id: number) => {
-  return jwt.sign({ sub: id }, process.env.REFRESH_JWT_SECRET, {
-    expiresIn: process.env.REFRESH_TOKEN_EXPIRATION,
+const generateToken = (id: number, key: string, expireTime: number) => {
+  return jwt.sign({ sub: id }, key, {
+    expiresIn: expireTime,
   })
 }
