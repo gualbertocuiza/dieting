@@ -20,8 +20,8 @@ export const verifyToken = async (
       const tokenVerified = jwt.verify(
         token,
         req.path === '/api/authentication/refresh'
-          ? 'refreshJWTSecret'
-          : 'accessJWTSecret'
+          ? process.env.REFRESH_JWT_SECRET
+          : process.env.ACCESS_JWT_SECRET
       )
 
       if (tokenVerified) {
