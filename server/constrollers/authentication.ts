@@ -30,7 +30,6 @@ export const authenticate = async (req: Request, res: Response) => {
 
 export const refresh = async (req: Request, res: Response) => {
   const userId = res.locals.user as number
-  return res.json({ data: userId })
   var user = await prisma.users.findUnique({
     where: {
       id: userId,
