@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { Request, Response } from 'express'
+import bcrypt from 'bcrypt'
 
 const prisma = new PrismaClient()
 
@@ -19,8 +20,11 @@ export const show = async (req: Request, res: Response) => {
 }
 
 export const store = async (req: Request, res: Response) => {
+  const { first_name, last_name, email, password } = req.body
+  const hashedPassword = await bcrypt.hash(password, 10)
+  console.log(hashedPassword)
   await prisma.users.create({
-    data: { ...req.body },
+    data: { first_name, last_name, email, password: hashedPassword },
   })
   return res.sendStatus(201)
 }
