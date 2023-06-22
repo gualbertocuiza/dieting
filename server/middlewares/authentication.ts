@@ -17,7 +17,7 @@ export const verifyToken = async (
 
   if (token) {
     try {
-      const tokenVerified = jwt.verify(token, process.env.ACCESS_JWT_SECRET)
+      const tokenVerified = jwt.verify(token, 'accessJWTSecret')
       if (tokenVerified) {
         res.locals.userId = tokenVerified.sub
         return next()

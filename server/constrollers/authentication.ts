@@ -16,15 +16,11 @@ export const authenticate = async (req: Request, res: Response) => {
     const passwordCorrect = await bcrypt.compare(password, user.password)
     if (passwordCorrect) {
       return res.status(200).json({
-        accessToken: generateToken(
-          user.id,
-          process.env.ACCESS_JWT_SECRET,
-          parseInt(process.env.ACCESS_TOKEN_EXPIRATION)
-        ),
+        accessToken: generateToken(user.id, 'accessJWTSecret', 12000),
         refreshToken: generateToken(
           user.id,
-          process.env.REFRESH_JWT_SECRET,
-          parseInt(process.env.REFRESH_TOKEN_EXPIRATION)
+          'refreshJWTSecrerefreshJWTSecret',
+          1209600
         ),
       })
     }
@@ -41,15 +37,11 @@ export const refresh = async (req: Request, res: Response) => {
   })
   if (user) {
     return res.status(200).json({
-      accessToken: generateToken(
-        user.id,
-        process.env.ACCESS_JWT_SECRET,
-        parseInt(process.env.ACCESS_TOKEN_EXPIRATION)
-      ),
+      accessToken: generateToken(user.id, 'accessJWTSecret', 12000),
       refreshToken: generateToken(
         user.id,
-        process.env.REFRESH_JWT_SECRET,
-        parseInt(process.env.REFRESH_TOKEN_EXPIRATION)
+        'refreshJWTSecrerefreshJWTSecret',
+        1209600
       ),
     })
   }

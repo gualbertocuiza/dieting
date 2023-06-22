@@ -9,13 +9,28 @@ import {
 } from '../services/user'
 
 export const index = async (req: Request, res: Response) => {
-  const users = await getUsers()
-  res.status(200).json(users)
+  try {
+    const users = await getUsers()
+    res.status(200).json(users)
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error, msj: 'Something when wrong, please try again latter!' })
+  }
 }
 
 export const show = async (req: Request, res: Response) => {
-  const users = await getUser(parseInt(req.params.id))
-  res.status(200).json(users)
+  try {
+    const user = await getUser(parseInt(req.params.id))
+    if (user) {
+      return res.status(200).json(user)
+    }
+    return res.sendStatus(204)
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error, msj: 'Something when wrong, please try again latter!' })
+  }
 }
 
 export const store = async (req: Request, res: Response) => {
@@ -32,12 +47,18 @@ export const store = async (req: Request, res: Response) => {
 export const update = async (req: Request, res: Response) => {
   const updatedUser = await updateUser(parseInt(req.params.id), req.body)
   if (!updatedUser) {
-    return res.status(400).json({ error: 'Something went wrong' })
+    return res.status(500).json({ error: 'Something went wrong' })
   }
   return res.sendStatus(204)
 }
 
 export const destroy = async (req: Request, res: Response) => {
-  await deleteUser(parseInt(req.params.id))
-  return res.sendStatus(204)
+  try {
+    await deleteUser(parseInt(req.params.id))
+    return res.sendStatus(204)
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error, msj: 'Something when wrong, please try again latter!' })
+  }
 }
