@@ -15,3 +15,5 @@ app.all('*', verifyToken)
 app.use('/api', routers)
 
 app.listen(port, () => console.log(`Application started on port: ${port}`))
+
+module.exports = app
