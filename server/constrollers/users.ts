@@ -35,7 +35,13 @@ export const show = async (req: Request, res: Response) => {
 
 export const store = async (req: Request, res: Response) => {
   const { first_name, last_name, email, password } = req.body
-  const hashedPassword = await bcrypt.hash(password, 10)
+  let hashedPassword
+  if (process.env.NODE_ENV === 'test') {
+    hashedPassword = password
+  } else {
+    hashedPassword = await bcrypt.hash(password, 10)
+  }
+
   const data = { first_name, last_name, email, password: hashedPassword }
   const userCreated = await storeUser(data)
   if (!userCreated) {

@@ -122,7 +122,7 @@ describe('User controller', () => {
       expect(response._getStatusCode()).toEqual(500)
     })
   })
-  /*describe('create user', () => {
+  describe('create user', () => {
     const createBody = {
       first_name: 'Jhon',
       last_name: 'Test',
@@ -151,7 +151,7 @@ describe('User controller', () => {
 
       expect(response._getStatusCode()).toEqual(201)
     })
-  })*/
+  })
   describe('update user', () => {
     const updateBody = {
       first_name: 'John updated',
