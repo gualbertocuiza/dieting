@@ -16,6 +16,7 @@ describe('/users', () => {
       await request(app)
         .get('/api/users/1')
         .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
         .expect(200)
     })
     it('should return 204 when no user found by ID', async () => {
