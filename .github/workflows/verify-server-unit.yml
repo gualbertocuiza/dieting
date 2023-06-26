@@ -1,0 +1,21 @@
+name: Verify Servier Unit Tests
+
+on:
+  pull_request:
+    paths:
+      - "server/**"
+
+defaults:
+  run:
+    working-directory: ./server
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛎 Checkout
+        uses: actions/checkout@v3
+      - name: Install
+        run: npm i
+      - name: Test
+        run: npm run test:unit
