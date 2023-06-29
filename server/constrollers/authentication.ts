@@ -25,7 +25,7 @@ export const authenticate = async (req: Request, res: Response) => {
       })
     }
   }
-  return res.sendStatus(401)
+  return res.status(401).json({ error: [{ msg: 'Incorrect credentials' }] })
 }
 
 export const refresh = async (req: Request, res: Response) => {
