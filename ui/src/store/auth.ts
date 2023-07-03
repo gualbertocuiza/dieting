@@ -33,8 +33,12 @@ export const useAuthStore = defineStore('auth', () => {
           password,
         }
       )
+      const { sub } = decodeToken(data.accessToken)
+      const user = await axios.get('http://localhost:3000/api/users/' + sub, {
+        headers: { Authorization: data.accessToken },
+      })
       loading.value = false
-      setAuthUser(data)
+      setAuthUser(user.data)
     } catch (err: any) {
       loading.value = false
       hasError.value = true
@@ -42,6 +46,22 @@ export const useAuthStore = defineStore('auth', () => {
         errorMessage.value = err.response.data.error[0].msg
       }
     }
+  }
+
+  const decodeToken = (token: string) => {
+    const base64Url = token.split('.')[1]
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+    const jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split('')
+        .map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+        })
+        .join('')
+    )
+
+    return JSON.parse(jsonPayload)
   }
 
   return {
