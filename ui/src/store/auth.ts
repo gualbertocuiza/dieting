@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia'
 import { computed, reactive, ref } from 'vue'
 import { User } from '../interfaces/User'
-import axios from 'axios'
+import api from '../utils/axios'
+import { getAccessToken } from '../utils/token'
+import router from '../router'
 
 export const useAuthStore = defineStore('auth', () => {
   const auth = reactive<User>({
@@ -26,26 +28,32 @@ export const useAuthStore = defineStore('auth', () => {
   const login = async (email: string, password: string) => {
     loading.value = true
     try {
-      const { data } = await axios.post(
-        'http://localhost:3000/api/authentication',
-        {
-          email,
-          password,
-        }
-      )
-      const { sub } = decodeToken(data.accessToken)
-      const user = await axios.get('http://localhost:3000/api/users/' + sub, {
-        headers: { Authorization: data.accessToken },
+      const { data } = await api.post('/authentication', {
+        email,
+        password,
       })
-      loading.value = false
-      setAuthUser(user.data)
+      localStorage.setItem('accessToken', data.accessToken)
+      localStorage.setItem('refreshToken', data.refreshToken)
+      getAuthUser()
     } catch (err: any) {
       loading.value = false
       hasError.value = true
       if (err.response) {
         errorMessage.value = err.response.data.error[0].msg
       }
+      errorMessage.value = 'Something went wrong, please try again latter!'
     }
+  }
+
+  const getAuthUser = async () => {
+    const accessToken = getAccessToken()
+    if (!accessToken) return
+    const { sub } = decodeToken(accessToken ?? '')
+    const user = await api.get('/users/' + sub)
+    console.log('user ', user)
+    setAuthUser(user.data)
+    loading.value = false
+    router.push('/')
   }
 
   const decodeToken = (token: string) => {
@@ -72,5 +80,6 @@ export const useAuthStore = defineStore('auth', () => {
     hasError,
     errorMessage,
     setAuthUser,
+    getAuthUser,
   }
 })
