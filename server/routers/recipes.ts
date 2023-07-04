@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { body } from 'express-validator'
 import validate from '../utils/validation'
+import { index, show, store, update, destroy } from '../constrollers/recipes'
 
 const router = Router()
 
@@ -32,9 +33,7 @@ const router = Router()
  *                          { "id": 1, "firstName": "Sundar", "lastName": "Pichai", "displayImageUrl": https://thispersondoesnotexist.com/image, "email": sundar.pichai@google.com, "phone": "0800001066", "jobTitle": "CEO", "role": { "id": 1, "description": "Admin" } }, { "id": 2, "firstName": "Matt", "lastName": "Cutts", "displayImageUrl": https://thispersondoesnotexist.com/image, "email": matt.cutts@google.com, "phone": "0800001066", "jobTitle": "Software Dev", "role": { "id": 2, "description": "Sales Rep" } }]'
  *
  */
-router.route('/').get((req, res) => {
-  res.send('list recipes')
-})
+router.route('/').get(index)
 
 /**
  * @openapi
@@ -59,9 +58,7 @@ router.route('/').get((req, res) => {
  *                         value: '{ "id": 1, "title": "Honey garlic chicken", "created_at": "2023-26-05 10:27:21.532056", "photo": "https://dieting.com/storage/35435634.png", "rating_avg": 4.5, "comments": 5, "type": "Low-fat diet", "nutriends": { "protein": 25, "carbohydrates": 40, "fats": 15, "calories": 200 }}'
  *
  */
-router.route('/:id').get((req, res) => {
-  res.send(`show recipe with id: ${req.params.id}`)
-})
+router.route('/:id').get(show)
 
 /**
  * @openapi
@@ -112,9 +109,7 @@ router
       .withMessage('the name must have minimum length of 3')
       .trim(),
     validate,
-    (req, res) => {
-      res.status(200).json({ body: req.body })
-    }
+    store
   )
 
 /**
@@ -159,9 +154,7 @@ router
       .withMessage('the name must have minimum length of 3')
       .trim(),
     validate,
-    (req, res) => {
-      res.send(`update recipe`)
-    }
+    update
   )
 
 /**
@@ -187,8 +180,6 @@ router
  *                         value: '{ "message": "No Content" }'
  *
  */
-router.route('/:id').delete((req, res) => {
-  res.send(`delete recipe`)
-})
+router.route('/:id').delete(destroy)
 
 export default router
