@@ -28,10 +28,10 @@ describe('/recipes', () => {
   })
   describe('POST /recipes', () => {
     const recipe = {
-      first_name: 'Gcuiza',
-      last_name: 'Cuiza',
-      email: 'gcuiza@unos.com',
-      password: 'password',
+      name: 'Honey garlic chicken',
+      description: 'Step 1...',
+      user_id: 1,
+      type_id: 1,
     }
     it('should return 201 and create a new recipe', async () => {
       await request(app)
@@ -39,34 +39,6 @@ describe('/recipes', () => {
         .set('Accept', 'application/json')
         .send(recipe)
         .expect(201)
-    })
-    it('should return 400 if first name is null', async () => {
-      await request(app)
-        .post('/api/recipes')
-        .set('Accept', 'application/json')
-        .send({ ...recipe, first_name: '' })
-        .expect(400)
-    })
-    it('should return 400 if first name has less than three characters', async () => {
-      await request(app)
-        .post('/api/recipes')
-        .set('Accept', 'application/json')
-        .send({ ...recipe, first_name: 'Gu' })
-        .expect(400)
-    })
-    it('should return 400 if last name is null', async () => {
-      await request(app)
-        .post('/api/recipes')
-        .set('Accept', 'application/json')
-        .send({ ...recipe, last_name: '' })
-        .expect(400)
-    })
-    it('should return 400 if last name has less than three characters', async () => {
-      await request(app)
-        .post('/api/recipes')
-        .set('Accept', 'application/json')
-        .send({ ...recipe, last_name: 'Cu' })
-        .expect(400)
     })
   })
   describe('DELETE /recipes/:id', () => {
