@@ -15,29 +15,40 @@ const password_confirmation = ref('')
     <v-card-text>
       <reg-form-validators
         :first_name="first_name"
+        :last_name="last_name"
+        :email="email"
         :password="password"
         :confirmation="password_confirmation"
-        v-slot="{ required, matching, complexity }"
+        v-slot="{
+          firstNameRules,
+          lastNameRules,
+          emailRules,
+          passwordRules,
+          passwordConfirmationRules,
+        }"
       >
         <v-form ref="form">
           <v-text-field
             v-model="first_name"
-            :rules="required"
+            :rules="firstNameRules"
             label="First Name"
             type="text"
           ></v-text-field>
           <v-text-field
             v-model="last_name"
+            :rules="lastNameRules"
             label="Last Name"
             type="text"
           ></v-text-field>
           <v-text-field
             v-model="email"
+            :rules="emailRules"
             label="Email"
             type="email"
           ></v-text-field>
           <v-text-field
             v-model="password"
+            :rules="passwordRules"
             label="Password"
             type="password"
           ></v-text-field>
@@ -45,12 +56,10 @@ const password_confirmation = ref('')
             v-model="password_confirmation"
             label="Confirm Password"
             type="password"
-            :rules="matching"
+            :rules="passwordConfirmationRules"
           ></v-text-field>
           <v-btn color="primary" class="mt-4" block>Register</v-btn>
         </v-form>
-        <p>Matches: {{ matching }}</p>
-        <p>Complex: {{ complexity }}</p>
       </reg-form-validators>
     </v-card-text>
 

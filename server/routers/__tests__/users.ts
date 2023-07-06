@@ -72,7 +72,7 @@ describe('/users', () => {
   describe('DELETE /users/:id', () => {
     it('should return 204 and delete the found user', async () => {
       await request(app)
-        .delete('/api/users/1')
+        .delete('/api/users/2')
         .set('Accept', 'application/json')
         .expect(204)
     })
