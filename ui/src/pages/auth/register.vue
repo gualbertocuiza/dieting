@@ -7,6 +7,7 @@ const last_name = ref('')
 const email = ref('')
 const password = ref('')
 const password_confirmation = ref('')
+const validForm = ref(false)
 </script>
 
 <template>
@@ -27,7 +28,7 @@ const password_confirmation = ref('')
           passwordConfirmationRules,
         }"
       >
-        <v-form ref="form">
+        <v-form v-model="validForm" ref="form">
           <v-text-field
             v-model="first_name"
             :rules="firstNameRules"
@@ -58,7 +59,9 @@ const password_confirmation = ref('')
             type="password"
             :rules="passwordConfirmationRules"
           ></v-text-field>
-          <v-btn color="primary" class="mt-4" block>Register</v-btn>
+          <v-btn :disabled="!validForm" color="primary" class="mt-4" block
+            >Register</v-btn
+          >
         </v-form>
       </reg-form-validators>
     </v-card-text>

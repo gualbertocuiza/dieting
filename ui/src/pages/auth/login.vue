@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useAuthStore } from '../../store/auth'
+import LoginFormValidators from '../../components/auth/login-form-validator'
 
-const email = ref<string>('maria@unosquare.com')
-const password = ref<string>('password1')
+const email = ref<string>('')
+const password = ref<string>('')
+const validForm = ref(false)
 const authStore = useAuthStore()
 
 const login = () => {
@@ -18,22 +20,35 @@ const login = () => {
       authStore.errorMessage
     }}</v-alert>
     <v-card-text>
-      <v-form ref="form" @submit.prevent="login">
-        <v-text-field v-model="email" label="Email" type="text"></v-text-field>
-        <v-text-field
-          v-model="password"
-          label="Password"
-          type="password"
-        ></v-text-field>
-        <v-btn
-          :loading="authStore.loading"
-          color="primary"
-          class="mt-4"
-          type="submit"
-          block
-          >Log in</v-btn
-        >
-      </v-form>
+      <login-form-validators
+        :email="email"
+        :password="password"
+        v-slot="{ emailRules, passwordRules }"
+      >
+        <v-form @submit.prevent="login" v-model="validForm" ref="form">
+          <v-text-field
+            v-model="email"
+            :rules="emailRules"
+            label="Email"
+            type="text"
+          ></v-text-field>
+          <v-text-field
+            v-model="password"
+            :rules="passwordRules"
+            label="Password"
+            type="password"
+          ></v-text-field>
+          <v-btn
+            :loading="authStore.loading"
+            :disabled="!validForm"
+            color="primary"
+            class="mt-4"
+            type="submit"
+            block
+            >Log in</v-btn
+          >
+        </v-form>
+      </login-form-validators>
     </v-card-text>
     <v-card-text
       >No account yet? create it
