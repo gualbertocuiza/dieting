@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useAuthStore } from '../../store/auth'
-import LoginFormValidators from '../../components/auth/login-form-validator'
+//import LoginFormValidators from '../../components/auth/login-form-validator'
 
 const email = ref<string>('')
 const password = ref<string>('')
@@ -31,12 +31,14 @@ const login = () => {
             :rules="emailRules"
             label="Email"
             type="text"
+            id="email-input"
           ></v-text-field>
           <v-text-field
             v-model="password"
             :rules="passwordRules"
             label="Password"
             type="password"
+            id="password-input"
           ></v-text-field>
           <v-btn
             :loading="authStore.loading"
